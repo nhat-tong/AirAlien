@@ -1,0 +1,4 @@
+
+1. https://github.com/railsinstaller/railsinstaller-windows/issues/73
+
+2. https://stackoverflow.com/questions/29293321/ruby-on-windows-causes-error-cannot-load-such-file-bcrypt-ext/33593911#33593911
