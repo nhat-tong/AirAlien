@@ -68,6 +68,7 @@ GEM
     execjs (2.7.0)
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
+    geocoder (1.4.4)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashie (3.5.5)
@@ -202,6 +203,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise
+  geocoder
   jbuilder (~> 2.5)
   jquery-rails
   omniauth

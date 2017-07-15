@@ -1,2 +1,186 @@
-<h1>Rooms#show</h1>
-<p>Find me in app/views/rooms/show.html.erb</p>
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <!-- Image -->
+        <div class="row">
+            <div class="col-md-12">
+                <%= image_tag @photos[0].image.url(), class: "img-responsive" if @photos.length > 0 %>
+            </div>
+        </div>
+
+        <br/>
+
+        <!-- Main Info -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <%= image_tag gravatar(@room.user), class: "img-circle avatar-large" %><br/><br/>
+                        <%= @room.user.fullname %>
+                    </div>
+                    <div class="col-md-9">
+                        <h4><%= @room.listing_name  %></h4>
+                        <%= @room.address %>
+
+                        <div class="row text-center row-space-1">
+                            <div class="col-sm-3">
+                                <i class="fa fa-home fa-2x"></i>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="fa fa-users fa-2x"></i>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="fa fa-bed fa-2x"></i>
+                            </div>
+                            <div class="col-sm-3">
+                                <i class="fa fa-ship fa-2x"></i>
+                            </div>
+                        </div>
+
+                        <div class="row text-center row-space-1">
+                            <div class="col-sm-3">
+                                <%= @room.home_type %>
+                            </div>
+                            <div class="col-sm-3">
+                                 <%= @room.accommodate %> <%= @room.accommodate > 1 ? "Guests" : "Guest" %>
+                            </div>
+                            <div class="col-sm-3">
+                                 <%= @room.bed_room %> <%= @room.bed_room > 1 ? "Bedrooms" : "Bedroom" %>
+                            </div>
+                            <div class="col-sm-3">
+                                 <%= @room.bath_room %> <%= @room.bath_room > 1 ? "Bathrooms" : "Bathroom" %>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Reservations -->
+            </div>
+        </div>
+
+        <!-- About -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2>About This Listing</h2>
+                <p><%= @room.summary %></p>
+            </div>
+        </div>
+
+        <!-- Amentities -->
+        <div class="row">
+            <div class="col-md-2">
+                <p>Amentities</p>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="amentities">
+                            <li class="<%= 'text-line-through' if !@room.is_tv %>">TV</li>
+                            <li class="<%= 'text-line-through' if !@room.is_kitchen %>">Kitchen</li>
+                            <li class="<%= 'text-line-through' if !@room.is_internet %>">Internet</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                         <ul class="amentities">
+                            <li class="<%= 'text-line-through' if !@room.is_heating %>">Heating</li>
+                            <li class="<%= 'text-line-through' if !@room.is_air %>">Air Conditionning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caroussel -->
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+
+                    <% if @photos %>
+                    <ol class="carousel-indicators">
+                        <% @photos.each do |photo| %>
+                            <li data-target="#myCarousel" data-slide-to="<%= photo.id %>" class="active"></li>
+                        <% end %>
+                    </ol>
+                    <% end %>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <% if @photos %>
+                        <% @photos.each do |photo| %>
+                            <div class="item <%= 'active' if photo.id == @photos[0].id %>">
+                            <%= image_tag photo.image.url() %>
+                            </div>
+                        <% end %>
+                        <% end %>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Google Map -->
+        <div class="row" style="padding-top:15px" >
+            <div class="col-md-12">
+            <div id="map"></div>
+
+            <style>
+            #map {
+                height: 400px;
+                width: 100%;
+            }
+            </style>
+
+            <script>
+            function initMap() {
+                var center = {lat: <%= @room.latitude %> , lng: <%= @room.longitude %>};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: center,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var marker = new google.maps.Marker({
+                position: center,
+                title: "<%= @room.address %>",
+                map: map
+                });
+            }
+            </script>
+
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEUKbGYuaG_Bx84jG-BuaSu2A4U0FFzUw&callback=initMap"></script>
+            </div>
+        </div>
+
+        <!-- Close by room -->
+        <h3>Near by</h3>
+        <div class="row">
+            <% for room in @room.nearbys(10) %>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading preview">
+                            <%= image_tag room.photos[0].image.url(), style: "width:300px;height:300px" if room.photos.length > 0 %>
+                        </div>
+                        <div class="panel-body">
+                            <%= link_to room.listing_name, room %><br>
+                            (<%= room.distance.round(2) %>) miles away
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

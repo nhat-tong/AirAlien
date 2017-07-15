@@ -209,3 +209,12 @@ input[type="checkbox"]:checked:before {
 .panel-heading.preview img {
 	width: 100%;
 }
+
+.amentities li {
+	margin-bottom: 10px;
+	list-style-type: none;
+}
+
+.amentities .text-line-through {
+	text-decoration: line-through;
+}
