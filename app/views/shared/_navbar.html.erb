@@ -22,7 +22,9 @@
               <%= image_tag gravatar(current_user), class: "img-circle avatar-small" %> &nbsp;
               <%= current_user.fullname %> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Your Trips</a></li>
+                <li><%= link_to 'Your listings', rooms_path %></li>
+                <li><%= link_to 'Your bookings', your_bookings_path %></li>
+                <li><%= link_to 'Your trips', your_trips_path %></li>
                 <li><a href="#">Wish Lists</a></li>
                 <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
                 <li role="separator" class="divider"></li>
@@ -36,7 +38,9 @@
               <a href="#"><i class="fa fa-envelope-open"></i>&nbsp;Messages</a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-home fa-lg"></i>&nbsp;Become a Host</a>
+              <%= link_to new_room_path do %>
+                  <i class="fa fa-home fa-lg"></i>&nbsp;Become a Host
+              <% end %>
             </li>
 
           </ul>

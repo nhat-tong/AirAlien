@@ -7,7 +7,11 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @photos = @room.photos
+    if current_user.id == @room.user.id 
+      redirect_to rooms_path, alert: "Sorry. You are owner of this room!!"
+    else 
+      @photos = @room.photos
+    end
   end
 
   def new

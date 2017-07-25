@@ -16,4 +16,14 @@ class Room < ApplicationRecord
   validates :summary, presence:true,  length: {maximum: 500}
   validates :address, presence:true,  length: {maximum: 500}
   validates :price, presence:true
+
+
+  def show_first_photo
+    if self.photos.length > 0
+      self.photos[0].image.url()
+    else 
+      gravatar(current_user)
+    end
+  end
+
 end

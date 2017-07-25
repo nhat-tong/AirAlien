@@ -28,7 +28,14 @@ class BookingsController < ApplicationController
 
         render json: output
     end
+
+    def your_trips
+        @trips = current_user.bookings;
+    end
   
+    def your_bookings
+        @rooms = current_user.rooms;
+    end
 
     private
         def booking_params

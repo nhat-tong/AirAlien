@@ -1,0 +1,34 @@
+<div class="row">   
+    <%= render 'bookings/sidebar' %>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Your bookings
+            </div>
+            <div class="panel-body">
+
+                <% @rooms.each do |room| %>
+                    <% room.bookings.each do |booking| %>
+                    <hr>
+                    <div class="row">
+                       <div class="col-md-2"><%= booking.start_date.strftime('%v') %></div>
+                       <div class="col-md-6">
+                            <%= link_to room_path(booking.room) do %>
+                                <%= image_tag booking.room.show_first_photo, class: "photo-thumb" %>
+                            <% end %>
+                       </div>
+                       <div class="col-md-2">
+                        <%= link_to user_path(booking.user) do %>
+                            <%= image_tag gravatar(booking.user), class: "img-circle avatar-medium" %>
+                        <% end %>
+                       </div>
+                       <div class="col-md-2">
+                        <h4>$<%= booking.total %></h4>
+                       </div>
+                    </div>
+                <% end %>
+            <% end %>
+            </div>
+        </div>
+    </div>
+</div>
