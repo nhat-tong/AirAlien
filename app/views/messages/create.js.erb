@@ -1,0 +1,5 @@
+<% publish_to conversation_messages_path(@conversation) do %>
+$('#chat').prepend("<%= j render @message %>");
+<% end %>
+
+$('#content').val('');

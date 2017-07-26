@@ -35,7 +35,9 @@
           <% end %>
 
             <li>
-              <a href="#"><i class="fa fa-envelope-open"></i>&nbsp;Messages</a>
+              <%= link_to conversations_path do %>
+                <i class="fa fa-envelope-open"></i>&nbsp;Messages
+              <% end %>
             </li>
             <li>
               <%= link_to new_room_path do %>
