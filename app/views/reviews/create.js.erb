@@ -1,0 +1,8 @@
+$('#reviews').prepend('<%= j render @review %>');
+$('#review_comment').val('');
+$('#review_comment').attr('disabled', true);
+
+$('#average_rating').raty('set', {score: <%= @review.room.average_rating %>});
+$('#reviews_count').text('(<%= @review.room.reviews.count %>)');
+
+toastr.success('review created!');

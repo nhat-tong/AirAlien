@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726083605) do
+ActiveRecord::Schema.define(version: 20170727100844) do
 
   create_table "bookings", force: :cascade do |t|
     t.integer  "user_id"
@@ -51,6 +51,17 @@ ActiveRecord::Schema.define(version: 20170726083605) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.index ["room_id"], name: "index_photos_on_room_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text     "comment"
+    t.integer  "star"
+    t.integer  "room_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_reviews_on_room_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|

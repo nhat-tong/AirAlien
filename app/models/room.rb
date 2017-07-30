@@ -2,6 +2,7 @@ class Room < ApplicationRecord
   belongs_to :user
   has_many :photos
   has_many :bookings
+  has_many :reviews
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
@@ -19,11 +20,15 @@ class Room < ApplicationRecord
 
 
   def show_first_photo
-    if self.photos.length > 0
-      self.photos[0].image.url()
+    if photos.length > 0
+      photos[0].image.url()
     else 
       gravatar(current_user)
     end
+  end
+
+  def average_rating
+    reviews.count == 0 ? 0 : reviews.average(:star).round(2)
   end
 
 end

@@ -7,10 +7,13 @@ class RoomsController < ApplicationController
   end
 
   def show
-    if current_user.id == @room.user.id 
+    if current_user == @room.user
       redirect_to rooms_path, alert: "Sorry. You are owner of this room!!"
     else 
       @photos = @room.photos
+      @reviews = @room.reviews.order("id desc")
+
+      @booked = Booking.where("user_id = ? AND room_id = ?", current_user.id, @room.id).present? if current_user
     end
   end
 

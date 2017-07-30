@@ -1,0 +1,38 @@
+<%= form_for([@room, @room.reviews.new], remote: true) do |f| %>
+    
+    <div id="user_stars"></div>
+
+    <div class="form-group">
+        <%= f.text_area :comment, rows: 3, class: "form-control" %>
+    </div>
+
+    <%= f.hidden_field :room_id, value: @room.id %>
+
+    <div class="actions">
+        <%= f.submit "Create", id: "review_submit", class: "btn btn-primary", disable: true %>
+    </div>
+
+<% end %>
+
+<script>
+    $('#user_stars').raty({
+        path: '/assets',
+        scoreName: 'review[star]',
+        score: 1
+    });
+
+    $('#review_comment').keyup(function(event){
+        var comment = $(event.currentTarget).val().trim();
+        if(comment !== '') {
+            $('#review_submit').attr('disabled', false);
+        }
+        else {
+            $('#review_submit').attr('disabled', true);
+        }
+
+        if(event.which === 13) {
+            $('#review_submit').submit();
+        }
+    });
+
+</script>

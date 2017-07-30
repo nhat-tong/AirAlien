@@ -25,6 +25,10 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create] 
    end
 
+   resources :rooms do
+    resources :reviews, only: [:create, :destroy]
+   end
+
    get '/preload' => 'bookings#preload'
    get '/preview' => 'bookings#preview'
 

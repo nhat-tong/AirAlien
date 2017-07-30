@@ -1,0 +1,7 @@
+<% if @reviews.count == 0 %>
+    <div class="text-center"><h4>There is no Review yet</h4></div>
+<% else %>
+    <div id="reviews">
+        <%= render @reviews %>
+    </div>
+<% end %>

@@ -42,5 +42,33 @@
 				</div>
 			<% end %>
 		</div>
+
+		<h3>Reviews</h3><br/>
+		<% @user.rooms.each do |room| %>
+			<% if !room.reviews.blank? %>
+				<h4>Room <%= link_to room.listing_name, room %> (<%= room.reviews.count %> reviews)</h4>
+				<% room.reviews.each do |review| %>
+					<div class="row">
+						<div class="col-md-2">
+							<%= image_tag gravatar(review.user), class: "img-circle avatar-medium" %><br/>
+							<%= review.user.fullname %>
+						</div>
+						<div class="col-md-10">
+							<div id="rating_<%= review.id %>"></div>
+							<%= review.comment %><br/>
+							<%= review.created_at.strftime("%v") %>
+						</div>
+					</div>
+
+					<script>
+						$('#rating_<%= review.id %>').raty({
+							path: '/assets',
+							readOnly: true,
+							score: <%= review.star %>
+						});
+					</script>
+				<% end %>
+			<% end %>
+		<% end %>
 	</div>
 </div>

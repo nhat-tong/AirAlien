@@ -1,0 +1,6 @@
+$('#review_<%= @id %>').empty();
+
+$('#average_rating').raty('set', { score: <%= @room.average_rating %> });
+$('#reviews_count').text('(<%= @room.reviews.count %>)');
+
+toastr.success("review deleted!");
